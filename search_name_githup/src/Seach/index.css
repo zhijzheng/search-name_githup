@@ -1,0 +1,11 @@
+div{
+    text-align: center;
+    max-height: 340px;
+}
+div>input{
+    height: 1.7rem;
+    width: 15rem;
+}
+div>button{
+    height: 1.8rem;
+}
