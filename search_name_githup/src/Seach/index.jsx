@@ -3,6 +3,7 @@ import { Input, Button } from 'antd'
 import axios from 'axios'
 import './index.css'
 export default class Search extends Component {
+  //  初始化子state
   state ={
     inputValue:'',
   }
@@ -15,9 +16,23 @@ export default class Search extends Component {
   }
     search=()=>{
     const serchVlaue = this.state.inputValue
+    // 获取数据
+    this.props.returnDate({
+      isFinite:false,
+      isLoading:true,
+    });
     axios.get(`https://api.github.com/search/users?q=${serchVlaue}`).then(
-      response => {console.log(response.data,'成功了')},
-      error => {console.log(error,'失败了')}
+      response => {
+        this.props.returnDate({
+          dataList: response.data.items,
+          isLoading: false
+        })
+      },
+      error => {this.props.returnDate({
+        isLoading:false,
+        err: '请求出错'
+      });
+      }
     );
 
     }
