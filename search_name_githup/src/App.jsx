@@ -8,7 +8,6 @@ export default class App extends Component {
     dataList:[],
     isFirst:true, 
     isLoading:false,
-    isFinite: false,
     err: '', // 存储请求相关错误信息
   }
   returnDate = (appObj) =>{

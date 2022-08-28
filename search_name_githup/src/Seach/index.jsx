@@ -18,7 +18,7 @@ export default class Search extends Component {
     const serchVlaue = this.state.inputValue
     // 获取数据
     this.props.returnDate({
-      isFinite:false,
+      isFirst:false,
       isLoading:true,
     });
     axios.get(`https://api.github.com/search/users?q=${serchVlaue}`).then(
