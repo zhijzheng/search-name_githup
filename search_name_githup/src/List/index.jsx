@@ -1,8 +1,27 @@
 import React, { Component } from 'react'
+import Pubsub from 'pubsub-js'
 
 export default class List extends Component {
+  //初始化状态
+  state={
+    dataList:[],
+    isFirst:true, 
+    isLoading:false,
+    err: '',
+  }
+//页面渲染render前调用
+componentDidMount(){
+  // 消息订阅
+  this.token = Pubsub.subscribe('github',(_,stateObj)=>{
+    this.setState(stateObj)
+  })
+}
+//组建卸载前触发
+componentWillUnmount(){
+  Pubsub.unsubscribe(this.token)
+}
   render() {
-    const {dataList,isFirst,isLoading,err } = this.props
+    const {dataList,isFirst,isLoading,err } = this.state
 
     console.log(dataList,'this.propslist');
     return (

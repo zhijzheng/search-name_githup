@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Input, Button } from 'antd'
+import PubSub from 'pubsub-js'
 import axios from 'axios'
 import './index.css'
 export default class Search extends Component {
@@ -17,21 +18,35 @@ export default class Search extends Component {
     search=()=>{
     const serchVlaue = this.state.inputValue
     // 获取数据
-    this.props.returnDate({
-      isFirst:false,
-      isLoading:true,
-    });
+    // this.props.returnDate({
+    //   isFirst:false,
+    //   isLoading:true,
+    // });
+    // 消息发布
+    PubSub.publish('github',{
+        isFirst:false,
+        isLoading:true,
+      });
     axios.get(`https://api.github.com/search/users?q=${serchVlaue}`).then(
       response => {
-        this.props.returnDate({
-          dataList: response.data.items,
+        // this.props.returnDate({
+        //   dataList: response.data.items,
+        //   isLoading: false
+        // })
+        PubSub.publish('github',{
+         dataList: response.data.items,
           isLoading: false
-        })
+        });
       },
-      error => {this.props.returnDate({
+      error => {
+      //   this.props.returnDate({
+      //   isLoading:false,
+      //   err: '请求出错'
+      // });
+      PubSub.publish('github',{
         isLoading:false,
         err: '请求出错'
-      });
+       });
       }
     );
 
